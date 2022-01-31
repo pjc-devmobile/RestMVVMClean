@@ -48,7 +48,7 @@ class HomeActivity : ComponentActivity() {
                 val images: List<ImageUiModel> by viewModel.images.observeAsState(
                     listOf()
                 )
-                if (!isLoading && images.isNotEmpty())
+                if (error == null && !isLoading && images.isNotEmpty())
                     Images(images)
             }
         }

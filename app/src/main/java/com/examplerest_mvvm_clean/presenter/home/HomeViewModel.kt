@@ -23,10 +23,12 @@ class HomeViewModel(
                 _images.value = imageList.map { img ->
                     img.toUiModel()
                 }
+                error.value = null
                 fetching.value = false
             }catch (ex: Exception){
                 error.value = ex.message
                 fetching.value = false
+                _images.value = listOf()
             }
         }
     }
