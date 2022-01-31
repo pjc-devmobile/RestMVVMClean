@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ExampleRest_MVVM_Clean</string>
+    <string name="title_helper">Helper</string>
+</resources>
