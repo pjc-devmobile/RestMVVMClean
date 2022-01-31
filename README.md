@@ -1,5 +1,5 @@
 # RestMVVMClean
-- Aplicativo Android nativo
+- Aplicativo Android nativo (kotlin)
 
 ## Tecnologias
 - Jetpack Compose
