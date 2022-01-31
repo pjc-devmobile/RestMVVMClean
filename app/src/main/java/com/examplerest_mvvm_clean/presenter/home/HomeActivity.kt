@@ -1,10 +1,12 @@
 package com.examplerest_mvvm_clean.presenter.home
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
@@ -16,6 +18,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
@@ -23,7 +26,6 @@ import com.examplerest_mvvm_clean.presenter.model.ImageUiModel
 import com.examplerest_mvvm_clean.theme.ExampleRest_MVVM_CleanTheme
 import com.examplerest_mvvm_clean.theme.Red200
 import org.koin.android.ext.android.inject
-import java.util.ArrayList
 
 class HomeActivity : ComponentActivity() {
 
@@ -61,10 +63,13 @@ class HomeActivity : ComponentActivity() {
 
 @Composable
 fun Loader() {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+    Box(
+        contentAlignment = Alignment.Center, // you apply alignment to all children
+        modifier = Modifier.fillMaxSize()
     ) {
-        CircularProgressIndicator( )
+        CircularProgressIndicator(
+            modifier = Modifier.align(Alignment.Center) // or to a specific child
+        )
     }
 }
 
@@ -76,17 +81,22 @@ fun Error(error: String) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Images(images: List<ImageUiModel>) {
+    val context = LocalContext.current
+    //val lblTitle = stringResource(id = R.string.lbl_title)
+
     LazyVerticalGrid(
         cells = GridCells.Fixed(4)
     ) {
         items(images.size) {
+            var image = images.get(index = it)
             Image(
-                painter = rememberImagePainter(data = images.get(index = it).link),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(128.dp)
-                    .padding(4.dp),
-                contentScale = ContentScale.FillBounds
+                painter = rememberImagePainter(data = image.link),
+                contentDescription = image.title,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.width(200.dp).height(200.dp).padding(4.dp)
+                    .clickable {
+                        Toast.makeText(context,  image.title, Toast.LENGTH_SHORT).show()
+                    }
             )
         }
     }
@@ -96,6 +106,6 @@ fun Images(images: List<ImageUiModel>) {
 @Composable
 fun DefaultPreview() {
     ExampleRest_MVVM_CleanTheme {
-        Images(ArrayList())
+        Loader()
     }
 }
