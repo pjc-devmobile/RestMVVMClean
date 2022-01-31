@@ -1,7 +1,7 @@
 # RestMVVMClean
 - Aplicativo Android nativo
 
-## Features
+## Tecnologias
 - Jetpack Compose
 - Injeção de dependência com koin
 - Arquiteturas MVVM + Clean
